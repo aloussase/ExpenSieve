@@ -1,0 +1,74 @@
+cabal-version: 3.0
+name:          ExpenSieve
+version:       0.1.0.0
+synopsis:      Expenses tracker REST API
+
+-- description:
+homepage:      https://github.com/aloussase/ExpenSieve
+license:       MIT
+license-file:  LICENSE
+author:        Alexander Goussas
+maintainer:    goussasalexander@gmail.com
+
+-- copyright:
+category:      Web
+build-type:    Simple
+
+-- extra-doc-files:    CHANGELOG.md
+-- extra-source-files:
+
+common warnings
+  ghc-options: -Wall
+
+executable ExpenSieve
+  import:             warnings
+  main-is:            Main.hs
+  other-modules:
+    ExpenSieve.Api
+    ExpenSieve.Api.Auth
+    ExpenSieve.Api.Users
+    ExpenSieve.Data.FixedTransaction
+    ExpenSieve.Data.Transaction
+    ExpenSieve.Data.TransactionGroup
+    ExpenSieve.Data.User
+    ExpenSieve.Error
+    ExpenSieve.Impls.Program
+    ExpenSieve.Symmantics.Transactions
+    ExpenSieve.Symmantics.Users
+
+  -- other-extensions:
+  build-depends:
+    , aeson
+    , base                     ^>=4.17.2.1
+    , bytestring
+    , clock
+    , cryptonite
+    , deriving-aeson
+    , dotenv
+    , mtl
+    , postgresql-simple
+    , resource-pool
+    , servant
+    , servant-auth
+    , servant-auth-server
+    , servant-server
+    , text
+    , time
+    , wai
+    , wai-extra
+    , wai-middleware-throttle
+    , warp
+
+  hs-source-dirs:     src
+  default-language:   Haskell2010
+  default-extensions:
+    DataKinds
+    DeriveAnyClass
+    DeriveGeneric
+    DerivingStrategies
+    DerivingVia
+    GeneralizedNewtypeDeriving
+    OverloadedStrings
+    ScopedTypeVariables
+    TypeFamilies
+    TypeOperators
