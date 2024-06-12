@@ -24,4 +24,5 @@ data TransactionGroup = TransactionGroup
   , transactionGroupName      :: !Text
   }
   deriving stock (Show, Generic)
+  deriving anyclass (FromRow)
   deriving (FromJSON, ToJSON) via PrefixedSnake "transactionGroup" TransactionGroup

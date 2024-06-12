@@ -4,7 +4,7 @@ import           Configuration.Dotenv               (defaultConfig, loadFile,
                                                      onMissingFile)
 import           Control.Monad.IO.Class
 import           Crypto.KDF.BCrypt                  (hashPassword)
-import           Data.Maybe                         (listToMaybe)
+import           Data.Maybe                         (fromMaybe, listToMaybe)
 import           Data.Pool
 import           Data.Text                          (Text)
 import qualified Data.Text.Encoding                 as TE
@@ -86,7 +86,11 @@ getUserByEmail' program email = liftIO $
     return $ listToMaybe rs
 
 createTransactionGroup' :: MonadIO m => Program -> NewTransactionGroup -> m TransactionGroup
-createTransactionGroup' = undefined
+createTransactionGroup' program newGroup = liftIO $
+  withResource (programDb program) $ \conn -> do
+    -- TODO: Handle error correctly.
+    rs <- query conn "insert into transaction_groups (start_date, end_date, name) values (?, ?, ?) returning *" newGroup
+    return $ fromMaybe (error "createTransactionGroup': fromMaybe") (listToMaybe rs)
 
 findAllTransactionGroups' = undefined
 
